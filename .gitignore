@@ -10,6 +10,7 @@ secret_keys.py
 *.bak
 
 # If you are using PyCharm
+.idea/csv-plugin.xml
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
