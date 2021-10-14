@@ -37,6 +37,8 @@ INSTALLED_APPS = [
 
     # Modules
     'django_bootstrap5',
+    'braces',
+    'rest_framework',
 
     # Django
     'django.contrib.admin',
