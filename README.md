@@ -42,20 +42,34 @@
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Python](https://www.python.org/) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/JoaoVLima/lil-url.git
 
 # Go into the repository
-$ cd electron-markdownify
+$ cd lil-url
 
+# Create a venv (Virtual Enviroment)
+$ python3 -m venv venv
+
+# Activate the venv
+$ source venv\bin\activate  # (Unix)
+$ .\venv\Scripts\activate   # (Windows)
+    
 # Install dependencies
-$ npm install
+$ pip install -r requiriments.txt
+
+# Generate a new Django Secret Key
+$ python3 generate_key.py
+    
+# Generate a new Django Models and the sqlite database
+$ python3 manage.py makemigrations
+$ python3 manage.py migrate
 
 # Run the app
-$ npm start
+$ python3 manage.py runserver
 ```
 
 Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
