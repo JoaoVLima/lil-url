@@ -16,6 +16,7 @@ class Shortener(DataLog):
     long_url = models.URLField()
     short_url = models.CharField(max_length=15, unique=True, blank=True)
     enabled = models.BooleanField(default=True)
+    localizacao = models.CharField(max_length=100, blank=True)
 
     class Meta:
         ordering = ['-date_created']
@@ -30,11 +31,13 @@ class Access(models.Model):
     ip = models.CharField(max_length=100, blank=True)
     localizacao = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        ordering = ['-date_accessed']
+
     def __str__(self):
         return f'{self.ip}'
 
 
 class Shortener_Access(models.Model):
-    fk_id_shortener = models.ForeignKey(Shortener, on_delete=models.CASCADE)
-    fk_id_access = models.ForeignKey(Access, on_delete=models.CASCADE)
-
+    fk_shortener = models.ForeignKey(Shortener, on_delete=models.CASCADE)
+    fk_access = models.ForeignKey(Access, on_delete=models.CASCADE)
