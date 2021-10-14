@@ -7,11 +7,81 @@
 
 {% endblock %}
 {% block content %}
-
+    <form id="form_url">
+        <p class="text-azul-escuro font-lg font-weight-bold mb-4"> Preencha o formulario, em breve entraremos em
+            contato.</p>
+        <div class="form-group">
+            <label for="long">longa</label>
+            <input type="text" id="long" name="long" placeholder="long" required>
+        </div>
+    <button type="button" id="botao" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Encurtar</button>
+    </form>
 {% endblock %}
 {% block footer %}
-
+    <div id="response" style="display: none;"></div>
 {% endblock %}
 {% block script %}
+    <script>
 
+
+    document.querySelector('#long').focus();
+    document.querySelector('#long').onkeyup = function (e) {
+        if (e.keyCode == 13) {
+            document.querySelector('#botao').click();
+        }
+    };
+    document.querySelector('#botao').onclick = function (e) {
+        var long = document.querySelector('#long').value;
+        if (long !== "") {
+            criar_url()
+        } else {
+            alert('Você precisa informar um url.');
+            document.querySelector('#long').focus();
+        }
+    }
+
+        function validURL(str) {
+            var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            return !!pattern.test(str);
+        }
+
+        function criar_url() {
+            const url_longa = document.getElementById("long").value;
+            if (!url_longa) throw new Error("Por favor preencher todos os campos.");
+
+            if (!validURL(url_longa)) throw new Error("URL invalida.");
+
+            $("#form_url").trigger('reset');
+            $.ajax({
+                type: "GET",
+                url: "{% url 'criar_url' %}",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'long': url_longa
+                },
+                success: function (data) {
+                    document.getElementById('response').insertAdjacentHTML('afterbegin',
+                        `
+                        <div class="row">
+                            <h5>Sua url é :` + data.short + `</h5>
+                            <h6>Sua url/dashboard é :` + data.short_dash + `</h6>
+                        </div>
+                        `
+                    )
+                    document.getElementById('response').style.display = "block";
+                    console.log('ai carai toma tua url braba')
+                    console.log(data.location)
+                },
+                error: function (data) {
+                    console.log('OH CARAI DEU MERDA')
+                    console.log(data.location)
+                }
+            });
+        }
+    </script>
 {% endblock %}
