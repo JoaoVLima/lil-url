@@ -14,10 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, re_path
-
-from .views import IndexView, ShortView
+from .views import IndexView, ShortView, ShortDashView, Criar_url
 
 urlpatterns = [
     re_path(r'^$', IndexView.as_view(), name='index'),
     re_path(r'^(?P<short>[a-zA-Z0-9]+)$', ShortView.as_view(), name='short'),
+    re_path(r'^(?P<short>[a-zA-Z0-9]+)/dashboard$', ShortDashView.as_view(), name='short_dash'),
+    re_path(r'^ajax/criar_url$', Criar_url.as_view(), name='criar_url'),
+
 ]
