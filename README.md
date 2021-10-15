@@ -55,11 +55,11 @@ $ cd lil-url
 $ python3 -m venv venv
 
 # Activate the venv
-$ source venv\bin\activate  # (Unix)
+$ source venv/bin/activate  # (Unix)
 $ .\venv\Scripts\activate   # (Windows)
     
 # Install dependencies
-$ pip install -r requiriments.txt
+$ pip install -r requirements.txt
 
 # Generate a new Django Secret Key
 $ python3 generate_key.py
